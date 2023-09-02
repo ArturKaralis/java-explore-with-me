@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   statistics-client:
-    build: statistics/client/
+    build: statistic/stat_client/
     container_name: ewm-stats-client
     ports:
       - "8080:8080"
@@ -12,7 +12,7 @@ services:
       - STAT_SERVER_ADDRESS=http://statistics-server:9090
 
   statistics-server:
-    build: statistics/server/
+    build: statistic/stat_server/
     container_name: ewm-stats-server
     ports:
       - "9090:9090"
