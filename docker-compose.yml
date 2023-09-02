@@ -17,7 +17,7 @@ services:
     ports:
       - "9090:9090"
     depends_on:
-      [ statistics-db ]
+      [ statistic-db ]
     environment:
       STAT_SERVER_PORT: 9090
       DB_HOST: emw_statistics_db
