@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMAT;
 
 @Getter
 @Setter
