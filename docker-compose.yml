@@ -9,7 +9,7 @@ services:
       [ stat_service]
     environment:
       - STAT_CLIENT_PORT=8080
-      - STAT_SERVER_ADDRESS=http://stat_service:9091
+      - STAT_SERVER_ADDRESS=http://stat_service:9090
 
   statistics-server:
     build: statistic/stat_service/
