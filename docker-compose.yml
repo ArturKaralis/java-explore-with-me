@@ -1,38 +1,26 @@
 version: '3.1'
 services:
-  statistic-client:
-    build: statistic/stat_client/
-    container_name: stat_client
-    ports:
-      - "8080:8080"
-    depends_on:
-      [ statistic-server ]
-    environment:
-      - STAT_CLIENT_PORT=8080
-      - STAT_SERVER_ADDRESS=http://statistic-server:9091
-
-  statistic-server:
-    build: statistic/stat_service/
-    container_name: stat_service
+  stats-server:
+    build: ./statistic/stat_service
+    image: service
+    container_name: service
     ports:
       - "9090:9090"
     depends_on:
-      [ statistic-db ]
+      - stats-db
     environment:
-      STAT_SERVER_PORT: 9090
-      DB_HOST: emw_statistics_db
-      DB_PORT: 5432
-      DB_NAME: ewmstatistics
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/events
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
 
-  statistic-db:
-    image: postgres:13.7-alpine
-    container_name: ewm-stats-db
+  stats-db:
+    image: postgres:14-alpine
+    container_name: stats-db
+    volumes:
+      - /var/lib/postgresql/data
     ports:
       - "6541:5432"
     environment:
-      POSTGRES_DB: ewmstatistics
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-    hostname: emw_statistics_db
+      - POSTGRES_DB=events
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
