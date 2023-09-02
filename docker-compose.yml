@@ -2,18 +2,18 @@ version: '3.1'
 services:
   statistics-client:
     build: statistic/stat_client/
-    container_name: stat_client
+    container_name: ewm-stats-client
     ports:
       - "8080:8080"
     depends_on:
-      [ stat_service]
+      [ statistics-server ]
     environment:
       - STAT_CLIENT_PORT=8080
-      - STAT_SERVER_ADDRESS=http://stat_service:9090
+      - STAT_SERVER_ADDRESS=http://statistics-server:9090
 
   statistics-server:
     build: statistic/stat_service/
-    container_name: stat_service
+    container_name: ewm-stats-server
     ports:
       - "9090:9090"
     depends_on:
