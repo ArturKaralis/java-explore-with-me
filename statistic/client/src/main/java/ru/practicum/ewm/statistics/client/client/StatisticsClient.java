@@ -16,8 +16,10 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.ewm.statistics.dto.RequestHitDto;
+import ru.practicum.ewm.statistics.dto.ResponseHitDto;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,14 +41,28 @@ public class StatisticsClient {
         return post("/hit", hitDto);
     }
 
+    public void hit(String app, String uri, String ip) {
+        RequestHitDto dto = new RequestHitDto();
+        dto.setApp(app);
+        dto.setUri(uri);
+        dto.setIp(ip);
+        dto.setTimestamp(LocalDateTime.now());
+
+        HttpEntity<RequestHitDto> request = new HttpEntity<>(dto, defaultHeaders());
+
+        prepareGatewayResponse(rest.exchange("/hit", HttpMethod.POST, request, Object.class));
+    }
+
     public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
+        HttpEntity<List<RequestHitDto>> request = new HttpEntity<>(null, defaultHeaders());
         Map<String, Object> parameters = Map.of(
                 "start", start.format(DATE_TIME_FORMATTER),
                 "end", end.format(DATE_TIME_FORMATTER),
                 "uris", String.join(", ", uris),
                 "unique", unique
         );
-        return get("/stats?start={start}&end={end}&uris={uris}&unique={unique}", parameters);
+        return prepareGatewayResponse(rest.exchange("/stats?start={start}&end={end}&uris={uris}&unique={unique}",
+                HttpMethod.GET, request, Object.class, parameters));
     }
 
     private static ResponseEntity<Object> prepareGatewayResponse(@NotNull ResponseEntity<Object> response) {
@@ -89,6 +105,35 @@ public class StatisticsClient {
             return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsByteArray());
         }
         return prepareGatewayResponse(serverResponse);
+    }
+
+    public ResponseEntity<Object> rating(LocalDateTime start, LocalDateTime end, List<String> uris, String uriBegins) {
+        HttpEntity<List<ResponseHitDto>> request = new HttpEntity<>(null, defaultHeaders());
+        Map<String, Object> parameters = new HashMap<>();
+        String url = "/rating?%s";
+        if (start != null) {
+            parameters.put("start", start.format(DATE_TIME_FORMATTER));
+            url = String.format(url, "start={start}&%s");
+        }
+        if (end != null) {
+            parameters.put("end", end.format(DATE_TIME_FORMATTER));
+            url = String.format(url, "end={end}&%s");
+        }
+        if (uris != null) {
+            parameters.put("uris", String.join(",", uris));
+            url = String.format(url, "uris={uris}");
+        }
+        if (uriBegins != null) {
+            parameters.put("uriBegins", uriBegins);
+            url = String.format(url, "uriBegins={uriBegins}");
+        }
+
+        return prepareGatewayResponse(rest.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                Object.class,
+                parameters));
     }
 
     private HttpHeaders defaultHeaders() {
