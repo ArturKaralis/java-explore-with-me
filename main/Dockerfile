@@ -1,3 +1,3 @@
-FROM amazoncorretto:11
-COPY target/*.jar main.jar
-ENTRYPOINT ["java", "-jar", "/main.jar"]
+FROM amazoncorretto:11-alpine-jdk
+COPY target/client-*.jar main.jar
+ENTRYPOINT ["java","-jar","/main.jar"]
