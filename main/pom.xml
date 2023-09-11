@@ -56,7 +56,7 @@
         </dependency>
         <dependency>
             <groupId>ru.practicum</groupId>
-            <artifactId>client</artifactId>
+            <artifactId>dto</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
