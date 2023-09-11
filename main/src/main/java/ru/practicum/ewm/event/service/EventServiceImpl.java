@@ -197,10 +197,10 @@ public class EventServiceImpl implements EventService {
         final long countDislike = ratingRepo.countByEventAndRating(event, Rating.DISLIKE);
         final EventDtoResponse eventDtoResponse = mapToEventDtoResponse(event, requests.size(), countLike, countDislike);
         try {
-            List<ResponseHitDto> views = objectMapper.readValue(statClient.getStats(event.getPublishedOn(),
+            List<ResponseHitDto> views = objectMapper.readValue(Objects.requireNonNull(statClient.getStats(event.getPublishedOn(),
                     LocalDateTime.now(),
                     List.of(String.format("/events/%d", eventId)),
-                    true).getBody().toString(), new TypeReference<>() {
+                    true).getBody()).toString(), new TypeReference<>() {
             });
             if (views == null || views.isEmpty()) {
                 eventDtoResponse.setViews(0);
