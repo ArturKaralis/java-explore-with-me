@@ -25,7 +25,7 @@ import ru.practicum.ewm.request.dto.EventRequestStatusUpdateRequest;
 import ru.practicum.ewm.request.dto.ParticipationRequestDto;
 import ru.practicum.ewm.request.model.ParticipationRequest;
 import ru.practicum.ewm.request.model.Status;
-import ru.practicum.ewm.statistics.client.client.*;
+import ru.practicum.ewm.statistics.client.client.StatisticsClient;
 import ru.practicum.ewm.statistics.dto.ResponseHitDto;
 import ru.practicum.ewm.user.dao.UserRepository;
 import ru.practicum.ewm.user.model.User;
