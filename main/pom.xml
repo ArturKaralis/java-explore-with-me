@@ -9,6 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <groupId>ru.practicum.explorewithme</groupId>
     <artifactId>main</artifactId>
 
     <properties>
@@ -68,6 +69,7 @@
             <groupId>ru.practicum</groupId>
             <artifactId>client</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
