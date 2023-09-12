@@ -51,11 +51,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mageddo.lombok</groupId>
-            <artifactId>lombok-ext</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>ru.practicum</groupId>
             <artifactId>util</artifactId>
             <version>${project.version}</version>
