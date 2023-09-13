@@ -92,5 +92,6 @@ public class EventMapper {
                         event.getInitiator().getName()))
                 .paid(event.isPaid())
                 .build();
+        //TODO confirmedRequests
     }
 }
