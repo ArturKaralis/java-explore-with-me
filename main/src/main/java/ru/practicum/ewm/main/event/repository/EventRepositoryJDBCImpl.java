@@ -21,16 +21,16 @@ import ru.practicum.ewm.main.user.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @Component
 @RequiredArgsConstructor
 public class EventRepositoryJDBCImpl implements EventRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public Event save(Event event) {
@@ -383,7 +383,7 @@ public class EventRepositoryJDBCImpl implements EventRepository {
                 .title(resultSet.getString("title"))
                 .annotation(resultSet.getString("annotation"))
                 .description(resultSet.getString("description"))
-                .eventDate(LocalDateTime.parse(resultSet.getString("event_date"), formatter))
+                .eventDate(LocalDateTime.parse(resultSet.getString("event_date"), DATE_TIME_FORMATTER))
                 .initiator(new User(
                         resultSet.getLong("user_id"),
                         resultSet.getString("user_name")))
@@ -394,9 +394,9 @@ public class EventRepositoryJDBCImpl implements EventRepository {
                 ))
                 .participantLimit(resultSet.getInt("participant_limit"))
                 .requestModeration(resultSet.getBoolean("request_moderation"))
-                .createdOn(LocalDateTime.parse(resultSet.getString("created_on"), formatter))
+                .createdOn(LocalDateTime.parse(resultSet.getString("created_on"), DATE_TIME_FORMATTER))
                 .publishedOn(resultSet.getString("published_on") == null ?
-                        null : LocalDateTime.parse(resultSet.getString("published_on"), formatter))
+                        null : LocalDateTime.parse(resultSet.getString("published_on"), DATE_TIME_FORMATTER))
                 .state(EventState.valueOf(resultSet.getString("state")));
 
     }

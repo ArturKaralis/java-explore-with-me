@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>explore-with-me-stat</artifactId>
+    <artifactId>statistic</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -18,10 +18,16 @@
     <modules>
         <module>client</module>
         <module>dto</module>
-        <module>service</module>
+        <module>server</module>
     </modules>
 
     <dependencies>
+        <dependency>
+            <groupId>ru.practicum</groupId>
+            <artifactId>util</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

@@ -6,22 +6,21 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
-import ru.practicum.ewm.statistic.dto.Formats;
 import ru.practicum.ewm.statistic.dto.ViewStatsDto;
 import ru.practicum.ewm.statistic.service.model.EndpointHit;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @Component
 @RequiredArgsConstructor
 public class StatisticServiceRepositoryJDBCImpl implements StatisticServiceRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Formats.DATE_TIME_PATTERN);
 
     @Override
     public void save(EndpointHit endpointHit) {
@@ -97,7 +96,7 @@ public class StatisticServiceRepositoryJDBCImpl implements StatisticServiceRepos
                 .app(resultSet.getString("app_name"))
                 .uri(resultSet.getString("app_uri"))
                 .ip(resultSet.getString("ip"))
-                .timestamp(LocalDateTime.parse(resultSet.getString("timestamp"), formatter))
+                .timestamp(LocalDateTime.parse(resultSet.getString("timestamp"), DATE_TIME_FORMATTER))
                 .build();
     }
 }

@@ -11,11 +11,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.ewm.statistic.dto.EndpointHitDto;
-import ru.practicum.ewm.statistic.dto.Formats;
 import ru.practicum.ewm.statistic.service.service.StatisticService;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,11 +22,11 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @WebMvcTest(controllers = StatisticServiceController.class)
 class StatisticServiceControllerTest {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Formats.DATE_TIME_PATTERN);
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -49,7 +47,7 @@ class StatisticServiceControllerTest {
     @SneakyThrows
     @Test
     void saveEndpointHit_whenInvoked_thenStatusIsOkAndDtoPassedToService() {
-        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", DATE_TIME_FORMATTER);
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .app("app")
                 .uri("/uri")
@@ -71,7 +69,7 @@ class StatisticServiceControllerTest {
     @SneakyThrows
     @Test
     void saveEndpointHit_whenAppFieldIsNull_thenStatusIsBadRequest() {
-        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", DATE_TIME_FORMATTER);
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .uri("/uri")
                 .ip("1.1.1.1")
@@ -87,7 +85,7 @@ class StatisticServiceControllerTest {
     @SneakyThrows
     @Test
     void saveEndpointHit_whenAppFieldIsBlank_thenStatusIsBadRequest() {
-        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", DATE_TIME_FORMATTER);
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .app(" ")
                 .uri("/uri")
@@ -104,7 +102,7 @@ class StatisticServiceControllerTest {
     @SneakyThrows
     @Test
     void saveEndpointHit_whenUriFieldIsNull_thenStatusIsBadRequest() {
-        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", DATE_TIME_FORMATTER);
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .app("app")
                 .ip("1.1.1.1")
@@ -120,7 +118,7 @@ class StatisticServiceControllerTest {
     @SneakyThrows
     @Test
     void saveEndpointHit_whenUriFieldIsBlank_thenStatusIsBadRequest() {
-        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", DATE_TIME_FORMATTER);
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .app("app")
                 .uri(" ")
@@ -137,7 +135,7 @@ class StatisticServiceControllerTest {
     @SneakyThrows
     @Test
     void saveEndpointHit_whenIpFieldIsNull_thenStatusIsBadRequest() {
-        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", DATE_TIME_FORMATTER);
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .app("app")
                 .uri("/uri")
@@ -153,7 +151,7 @@ class StatisticServiceControllerTest {
     @SneakyThrows
     @Test
     void saveEndpointHit_whenIpFieldIsBlank_thenStatusIsBadRequest() {
-        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", DATE_TIME_FORMATTER);
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .app("app")
                 .uri("/uri")
@@ -170,7 +168,7 @@ class StatisticServiceControllerTest {
     @SneakyThrows
     @Test
     void saveEndpointHit_whenIpFieldIsWrongFormat_thenStatusIsBadRequest() {
-        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", DATE_TIME_FORMATTER);
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .app("app")
                 .uri("/uri")
@@ -202,7 +200,7 @@ class StatisticServiceControllerTest {
     @SneakyThrows
     @Test
     void saveEndpointHit_whenTimestampFieldIsInFuture_thenStatusIsBadRequest() {
-        LocalDateTime timestamp = LocalDateTime.parse("3022-09-06 11:00:23", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("3022-09-06 11:00:23", DATE_TIME_FORMATTER);
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .app("app")
                 .uri("/uri")
@@ -236,9 +234,9 @@ class StatisticServiceControllerTest {
                         urisArgumentCaptor.capture(),
                         uniqueArgumentCaptor.capture()
                 );
-        assertEquals(LocalDateTime.parse(start, formatter), startArgumentCaptor.getValue(),
+        assertEquals(LocalDateTime.parse(start, DATE_TIME_FORMATTER), startArgumentCaptor.getValue(),
                 "Invalid start param passed to service");
-        assertEquals(LocalDateTime.parse(end, formatter), endArgumentCaptor.getValue(),
+        assertEquals(LocalDateTime.parse(end, DATE_TIME_FORMATTER), endArgumentCaptor.getValue(),
                 "Invalid end param passed to service");
         assertEquals(uri1, urisArgumentCaptor.getValue().get(0),
                 "Invalid first uri param passed to service");
@@ -266,9 +264,9 @@ class StatisticServiceControllerTest {
                         urisArgumentCaptor.capture(),
                         uniqueArgumentCaptor.capture()
                 );
-        assertEquals(LocalDateTime.parse(start, formatter), startArgumentCaptor.getValue(),
+        assertEquals(LocalDateTime.parse(start, DATE_TIME_FORMATTER), startArgumentCaptor.getValue(),
                 "Invalid start param passed to service");
-        assertEquals(LocalDateTime.parse(end, formatter), endArgumentCaptor.getValue(),
+        assertEquals(LocalDateTime.parse(end, DATE_TIME_FORMATTER), endArgumentCaptor.getValue(),
                 "Invalid end param passed to service");
         assertEquals(unique, uniqueArgumentCaptor.getValue(),
                 "Invalid unique param passed to service");

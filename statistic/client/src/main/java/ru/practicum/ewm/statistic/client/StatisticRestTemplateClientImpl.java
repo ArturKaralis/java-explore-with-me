@@ -10,20 +10,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.ewm.statistic.dto.EndpointHitDto;
-import ru.practicum.ewm.statistic.dto.Formats;
 import ru.practicum.ewm.statistic.dto.ViewStatsDto;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @Component
 public class StatisticRestTemplateClientImpl implements StatisticClient {
     private static final String HIT_URI_PREFIX = "/hit";
     private static final String STATS_URI_PREFIX = "/stats";
     private final RestTemplate restTemplate;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Formats.DATE_TIME_PATTERN);
 
     public StatisticRestTemplateClientImpl(@Value("${statistic-service.url}") String serverUrl) {
         this.restTemplate = new RestTemplateBuilder()
@@ -51,8 +50,8 @@ public class StatisticRestTemplateClientImpl implements StatisticClient {
             List<String> uris,
             boolean unique) {
         Map<String, Object> queryParams = Map.of(
-                "start", start.format(formatter),
-                "end", end.format(formatter),
+                "start", start.format(DATE_TIME_FORMATTER),
+                "end", end.format(DATE_TIME_FORMATTER),
                 "uris", uris.toArray(),
                 "unique", String.valueOf(unique)
         );

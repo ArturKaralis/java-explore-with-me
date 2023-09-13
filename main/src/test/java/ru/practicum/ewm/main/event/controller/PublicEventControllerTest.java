@@ -12,10 +12,8 @@ import ru.practicum.ewm.main.event.dto.searchrequest.PublicSearchParamsDto;
 import ru.practicum.ewm.main.event.dto.searchrequest.SearchSortOptionDto;
 import ru.practicum.ewm.main.event.model.RateType;
 import ru.practicum.ewm.main.event.service.EventService;
-import ru.practicum.ewm.statistic.dto.Formats;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,6 +23,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @WebMvcTest(controllers = PublicEventController.class)
 class PublicEventControllerTest {
@@ -33,7 +32,6 @@ class PublicEventControllerTest {
     private MockMvc mvc;
     @MockBean
     private EventService eventService;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Formats.DATE_TIME_PATTERN);
     @Captor
     private ArgumentCaptor<PublicSearchParamsDto> searchParamsArgumentCaptor;
     @Captor
@@ -50,8 +48,8 @@ class PublicEventControllerTest {
         String text = "text";
         String categories = "1";
         Boolean paid = true;
-        String rangeStart = LocalDateTime.now().minusMonths(1).format(formatter);
-        String rangeEnd = LocalDateTime.now().plusDays(1).format(formatter);
+        String rangeStart = LocalDateTime.now().minusMonths(1).format(DATE_TIME_FORMATTER);
+        String rangeEnd = LocalDateTime.now().plusDays(1).format(DATE_TIME_FORMATTER);
         Boolean onlyAvailable = true;
         String sort = "event_date";
         Integer from = 1;
@@ -69,9 +67,9 @@ class PublicEventControllerTest {
         assertThat(searchParamsArgumentCaptor.getValue().getCategoriesIds(), equalTo(Set.of(Integer.valueOf(categories))));
         assertThat(searchParamsArgumentCaptor.getValue().getPaid(), equalTo(paid));
         assertThat(searchParamsArgumentCaptor.getValue().getRangeStart(),
-                equalTo(LocalDateTime.parse(rangeStart, formatter)));
+                equalTo(LocalDateTime.parse(rangeStart, DATE_TIME_FORMATTER)));
         assertThat(searchParamsArgumentCaptor.getValue().getRangeEnd(),
-                equalTo(LocalDateTime.parse(rangeEnd, formatter)));
+                equalTo(LocalDateTime.parse(rangeEnd, DATE_TIME_FORMATTER)));
         assertThat(searchParamsArgumentCaptor.getValue().getOnlyAvailable(), equalTo(onlyAvailable));
         assertThat(searchParamsArgumentCaptor.getValue().getSortOption(), equalTo(SearchSortOptionDto.EVENT_DATE));
         assertThat(searchParamsArgumentCaptor.getValue().getFrom(), equalTo(from));

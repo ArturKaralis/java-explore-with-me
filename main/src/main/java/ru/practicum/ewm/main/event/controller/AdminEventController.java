@@ -12,7 +12,6 @@ import ru.practicum.ewm.main.event.model.EventState;
 import ru.practicum.ewm.main.event.service.EventService;
 import ru.practicum.ewm.main.exception.InvalidParamException;
 import ru.practicum.ewm.main.validator.OnUpdateValidation;
-import ru.practicum.ewm.statistic.dto.Formats;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -21,6 +20,8 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMAT;
 
 @RestController
 @Slf4j
@@ -35,9 +36,9 @@ public class AdminEventController {
             @RequestParam(name = "states", required = false) Set<String> stringStates,
             @RequestParam(name = "categories", required = false) Set<Integer> categoriesIds,
             @RequestParam(name = "rangeStart", required = false)
-            @DateTimeFormat(pattern = Formats.DATE_TIME_PATTERN) LocalDateTime rangeStart,
+            @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeStart,
             @RequestParam(name = "rangeEnd", required = false)
-            @DateTimeFormat(pattern = Formats.DATE_TIME_PATTERN) LocalDateTime rangeEnd,
+            @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeEnd,
             @PositiveOrZero @RequestParam(name = "from", required = false, defaultValue = "0") Integer from,
             @Positive @RequestParam(name = "size", required = false, defaultValue = "10") Integer size
     ) {

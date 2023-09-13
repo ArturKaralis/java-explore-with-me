@@ -16,23 +16,21 @@ import ru.practicum.ewm.main.request.model.EventParticipationRequest;
 import ru.practicum.ewm.main.request.model.RequestStatus;
 import ru.practicum.ewm.main.user.model.User;
 import ru.practicum.ewm.main.user.repository.UserRepository;
-import ru.practicum.ewm.statistic.dto.Formats;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @SpringBootTest
 class RequestRepositoryJDCBImplTest {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Formats.DATE_TIME_PATTERN);
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -179,6 +177,6 @@ class RequestRepositoryJDCBImplTest {
         return EventParticipationRequest.builder()
                 .id(resultSet.getLong("request_id"))
                 .requestStatus(RequestStatus.valueOf(resultSet.getString("request_status")))
-                .created(LocalDateTime.parse(resultSet.getString("created"), formatter));
+                .created(LocalDateTime.parse(resultSet.getString("created"), DATE_TIME_FORMATTER));
     }
 }

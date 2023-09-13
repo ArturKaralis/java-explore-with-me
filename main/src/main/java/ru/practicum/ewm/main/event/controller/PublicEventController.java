@@ -12,7 +12,6 @@ import ru.practicum.ewm.main.event.dto.searchrequest.SearchSortOptionDto;
 import ru.practicum.ewm.main.event.model.RateType;
 import ru.practicum.ewm.main.event.service.EventService;
 import ru.practicum.ewm.main.exception.InvalidParamException;
-import ru.practicum.ewm.statistic.dto.Formats;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
@@ -20,6 +19,8 @@ import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMAT;
 
 @RestController
 @Slf4j
@@ -36,10 +37,10 @@ public class PublicEventController {
             @RequestParam(name = "paid", required = false) Boolean paid,
 
             @RequestParam(name = "rangeStart", required = false)
-            @DateTimeFormat(pattern = Formats.DATE_TIME_PATTERN) LocalDateTime rangeStart,
+            @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeStart,
 
             @RequestParam(name = "rangeEnd", required = false)
-            @DateTimeFormat(pattern = Formats.DATE_TIME_PATTERN) LocalDateTime rangeEnd,
+            @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeEnd,
 
             @RequestParam(name = "onlyAvailable", required = false, defaultValue = "false") Boolean onlyAvailable,
             @RequestParam(name = "sort", required = false) String sort,

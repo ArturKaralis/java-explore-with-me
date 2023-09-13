@@ -8,13 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.statistic.dto.EndpointHitDto;
-import ru.practicum.ewm.statistic.dto.Formats;
 import ru.practicum.ewm.statistic.dto.ViewStatsDto;
 import ru.practicum.ewm.statistic.service.service.StatisticService;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMAT;
 
 @RestController
 @Slf4j
@@ -35,9 +36,9 @@ public class StatisticServiceController {
     @GetMapping("/stats")
     public List<ViewStatsDto> getViewStats(
             @RequestParam(name = "start", required = true)
-            @DateTimeFormat(pattern = Formats.DATE_TIME_PATTERN) LocalDateTime start,
+            @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime start,
             @RequestParam(name = "end", required = true)
-            @DateTimeFormat(pattern = Formats.DATE_TIME_PATTERN) LocalDateTime end,
+            @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime end,
             @RequestParam(name = "uris", required = false) List<String> uris,
             @RequestParam(name = "unique", required = false, defaultValue = "false") boolean unique
     ) {

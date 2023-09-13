@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDateTime;
 
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMAT;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -29,6 +31,6 @@ public class EndpointHitDto {
 
     @NotNull
     @Past
-    @JsonFormat(pattern = Formats.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DATE_TIME_FORMAT)
     private LocalDateTime timestamp;
 }

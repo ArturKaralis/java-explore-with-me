@@ -15,10 +15,8 @@ import ru.practicum.ewm.main.event.dto.searchrequest.AdminSearchParamsDto;
 import ru.practicum.ewm.main.event.dto.updaterequest.UpdateEventAdminRequestDto;
 import ru.practicum.ewm.main.event.model.EventState;
 import ru.practicum.ewm.main.event.service.EventService;
-import ru.practicum.ewm.statistic.dto.Formats;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,6 +26,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @WebMvcTest(controllers = AdminEventController.class)
 class AdminEventControllerTest {
@@ -38,7 +37,6 @@ class AdminEventControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     private EventService eventService;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Formats.DATE_TIME_PATTERN);
 
     @Captor
     private ArgumentCaptor<AdminSearchParamsDto> searchParamsArgumentCaptor;
@@ -54,8 +52,8 @@ class AdminEventControllerTest {
         Long usersId = 0L;
         String state = "PUBLISHED";
         Integer categoryId = 1;
-        String rangeStart = LocalDateTime.now().minusMonths(1).format(formatter);
-        String rangeEnd = LocalDateTime.now().plusDays(1).format(formatter);
+        String rangeStart = LocalDateTime.now().minusMonths(1).format(DATE_TIME_FORMATTER);
+        String rangeEnd = LocalDateTime.now().plusDays(1).format(DATE_TIME_FORMATTER);
         Integer from = 2;
         Integer size = 5;
 
@@ -70,9 +68,9 @@ class AdminEventControllerTest {
         assertThat(searchParamsArgumentCaptor.getValue().getCategoriesIds(), equalTo(Set.of(categoryId)));
         assertThat(searchParamsArgumentCaptor.getValue().getStates(), equalTo(Set.of(EventState.from(state).get())));
         assertThat(searchParamsArgumentCaptor.getValue().getRangeStart(),
-                equalTo(LocalDateTime.parse(rangeStart, formatter)));
+                equalTo(LocalDateTime.parse(rangeStart, DATE_TIME_FORMATTER)));
         assertThat(searchParamsArgumentCaptor.getValue().getRangeEnd(),
-                equalTo(LocalDateTime.parse(rangeEnd, formatter)));
+                equalTo(LocalDateTime.parse(rangeEnd, DATE_TIME_FORMATTER)));
         assertThat(searchParamsArgumentCaptor.getValue().getFrom(), equalTo(from));
         assertThat(searchParamsArgumentCaptor.getValue().getSize(), equalTo(size));
     }

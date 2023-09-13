@@ -14,21 +14,20 @@ import ru.practicum.ewm.main.request.dto.EventRequestStatusUpdateRequestDto;
 import ru.practicum.ewm.main.request.model.EventParticipationRequest;
 import ru.practicum.ewm.main.request.model.RequestStatus;
 import ru.practicum.ewm.main.user.model.User;
-import ru.practicum.ewm.statistic.dto.Formats;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @Component
 @RequiredArgsConstructor
 public class RequestRepositoryJDCBImpl implements RequestRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Formats.DATE_TIME_PATTERN);
 
 
     @Override
@@ -175,6 +174,6 @@ public class RequestRepositoryJDCBImpl implements RequestRepository {
         return EventParticipationRequest.builder()
                 .id(resultSet.getLong("request_id"))
                 .requestStatus(RequestStatus.valueOf(resultSet.getString("request_status")))
-                .created(LocalDateTime.parse(resultSet.getString("created"), formatter));
+                .created(LocalDateTime.parse(resultSet.getString("created"), DATE_TIME_FORMATTER));
     }
 }

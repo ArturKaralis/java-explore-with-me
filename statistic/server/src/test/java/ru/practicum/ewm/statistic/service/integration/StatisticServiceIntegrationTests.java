@@ -11,7 +11,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.ewm.statistic.dto.EndpointHitDto;
-import ru.practicum.ewm.statistic.dto.Formats;
 import ru.practicum.ewm.statistic.dto.ViewStatsDto;
 import ru.practicum.ewm.statistic.service.model.EndpointHit;
 import ru.practicum.ewm.statistic.service.repository.StatisticServiceRepository;
@@ -20,19 +19,19 @@ import java.net.URI;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class StatisticServiceIntegrationTests {
 
     private static final String HOST = "http://localhost:";
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Formats.DATE_TIME_PATTERN);
+
     @Autowired
     private TestRestTemplate testRestTemplate;
     @Autowired
@@ -53,7 +52,7 @@ class StatisticServiceIntegrationTests {
 
     @Test
     void endpointHitSaved() {
-        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2022-09-06 11:00:23", DATE_TIME_FORMATTER);
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .app("app")
                 .uri("/uri")
@@ -125,7 +124,7 @@ class StatisticServiceIntegrationTests {
     }
 
     private EndpointHit getDefaultEndpointHit() {
-        LocalDateTime timestamp = LocalDateTime.parse("2023-07-01 12:00:00", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2023-07-01 12:00:00", DATE_TIME_FORMATTER);
         return EndpointHit.builder()
                 .app("app")
                 .uri("/uri")
@@ -135,7 +134,7 @@ class StatisticServiceIntegrationTests {
     }
 
     private EndpointHit getEndpointHitWithUri(String uri) {
-        LocalDateTime timestamp = LocalDateTime.parse("2023-07-01 12:00:00", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2023-07-01 12:00:00", DATE_TIME_FORMATTER);
         return EndpointHit.builder()
                 .app("app")
                 .uri(uri)
@@ -150,7 +149,7 @@ class StatisticServiceIntegrationTests {
                 .app(resultSet.getString("app_name"))
                 .uri(resultSet.getString("app_uri"))
                 .ip(resultSet.getString("ip"))
-                .timestamp(LocalDateTime.parse(resultSet.getString("timestamp"), formatter))
+                .timestamp(LocalDateTime.parse(resultSet.getString("timestamp"), DATE_TIME_FORMATTER))
                 .build();
     }
 }

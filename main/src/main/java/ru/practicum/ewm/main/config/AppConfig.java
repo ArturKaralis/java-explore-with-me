@@ -14,7 +14,8 @@ import ru.practicum.ewm.statistic.client.StatisticClient;
 import ru.practicum.ewm.statistic.client.StatisticRestTemplateClientImpl;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @Configuration
 public class AppConfig {
@@ -26,9 +27,8 @@ public class AppConfig {
     @Primary
     public ObjectMapper objectMapper() {
         JavaTimeModule javaTimeModule = new JavaTimeModule();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
-        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
 
         return new ObjectMapper()
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL)

@@ -4,21 +4,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.practicum.ewm.statistic.dto.Formats;
 import ru.practicum.ewm.statistic.dto.ViewStatsDto;
 import ru.practicum.ewm.statistic.service.model.EndpointHit;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @SpringBootTest
 class StatisticServiceRepositoryJDBCImplTest {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Formats.DATE_TIME_PATTERN);
     @Autowired
     private StatisticServiceRepository statisticRepository;
 
@@ -36,8 +34,8 @@ class StatisticServiceRepositoryJDBCImplTest {
         statisticRepository.save(secondHit);
 
         List<ViewStatsDto> stat = statisticRepository.getViewStats(
-                LocalDateTime.parse("2023-01-01 00:00:00", formatter),
-                LocalDateTime.parse("2024-01-01 00:00:00", formatter),
+                LocalDateTime.parse("2023-01-01 00:00:00", DATE_TIME_FORMATTER),
+                LocalDateTime.parse("2024-01-01 00:00:00", DATE_TIME_FORMATTER),
                 List.of(),
                 true
         );
@@ -48,12 +46,12 @@ class StatisticServiceRepositoryJDBCImplTest {
     @Test
     void getViewStatsFilteredByStartDate() {
         EndpointHit endpointHit = getDefaultEndpointHit();
-        endpointHit.setTimestamp(LocalDateTime.parse("2022-01-01 00:00:00", formatter));
+        endpointHit.setTimestamp(LocalDateTime.parse("2022-01-01 00:00:00", DATE_TIME_FORMATTER));
         statisticRepository.save(endpointHit);
 
         List<ViewStatsDto> stat = statisticRepository.getViewStats(
-                LocalDateTime.parse("2023-01-01 00:00:00", formatter),
-                LocalDateTime.parse("2024-01-01 00:00:00", formatter),
+                LocalDateTime.parse("2023-01-01 00:00:00", DATE_TIME_FORMATTER),
+                LocalDateTime.parse("2024-01-01 00:00:00", DATE_TIME_FORMATTER),
                 List.of(),
                 true
         );
@@ -64,12 +62,12 @@ class StatisticServiceRepositoryJDBCImplTest {
     @Test
     void getViewStatsFilteredByEndDate() {
         EndpointHit endpointHit = getDefaultEndpointHit();
-        endpointHit.setTimestamp(LocalDateTime.parse("2023-01-03 00:00:00", formatter));
+        endpointHit.setTimestamp(LocalDateTime.parse("2023-01-03 00:00:00", DATE_TIME_FORMATTER));
         statisticRepository.save(endpointHit);
 
         List<ViewStatsDto> stat = statisticRepository.getViewStats(
-                LocalDateTime.parse("2023-01-01 00:00:00", formatter),
-                LocalDateTime.parse("2023-01-02 00:00:00", formatter),
+                LocalDateTime.parse("2023-01-01 00:00:00", DATE_TIME_FORMATTER),
+                LocalDateTime.parse("2023-01-02 00:00:00", DATE_TIME_FORMATTER),
                 List.of(),
                 true
         );
@@ -91,8 +89,8 @@ class StatisticServiceRepositoryJDBCImplTest {
         statisticRepository.save(thirdHit);
 
         List<ViewStatsDto> stat = statisticRepository.getViewStats(
-                LocalDateTime.parse("2023-01-01 00:00:00", formatter),
-                LocalDateTime.parse("2024-01-01 00:00:00", formatter),
+                LocalDateTime.parse("2023-01-01 00:00:00", DATE_TIME_FORMATTER),
+                LocalDateTime.parse("2024-01-01 00:00:00", DATE_TIME_FORMATTER),
                 List.of(),
                 false
         );
@@ -102,7 +100,7 @@ class StatisticServiceRepositoryJDBCImplTest {
     }
 
     private EndpointHit getEndpointHitWithUriAndIp(String uri, String ip) {
-        LocalDateTime timestamp = LocalDateTime.parse("2023-07-01 12:00:00", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2023-07-01 12:00:00", DATE_TIME_FORMATTER);
         return EndpointHit.builder()
                 .app("app")
                 .uri(uri)
@@ -112,7 +110,7 @@ class StatisticServiceRepositoryJDBCImplTest {
     }
 
     private EndpointHit getDefaultEndpointHit() {
-        LocalDateTime timestamp = LocalDateTime.parse("2023-07-01 12:00:00", formatter);
+        LocalDateTime timestamp = LocalDateTime.parse("2023-07-01 12:00:00", DATE_TIME_FORMATTER);
         return EndpointHit.builder()
                 .app("app")
                 .uri("/uri")
