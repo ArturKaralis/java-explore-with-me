@@ -16,7 +16,6 @@ import ru.practicum.ewm_service.events.model.Event;
 import ru.practicum.ewm_service.events.repository.EventRepository;
 import ru.practicum.ewm_service.exceptions.exception.ObjectNotFoundException;
 import ru.practicum.ewm_service.requests.repository.RequestRepository;
-import ru.practicum.ewm_service.statclient.Client;
 
 import java.util.List;
 import java.util.Optional;
