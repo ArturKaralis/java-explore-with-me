@@ -20,6 +20,7 @@ import ru.practicum.ewm_service.requests.dto.ParticipationRequestDto;
 import ru.practicum.ewm_service.requests.mapper.RequestMapper;
 import ru.practicum.ewm_service.requests.model.ParticipationRequest;
 import ru.practicum.ewm_service.requests.repository.RequestRepository;
+import ru.practicum.ewm_service.statclient.StatisticsClient;
 import ru.practicum.ewm_service.user.model.User;
 import ru.practicum.ewm_service.user.repository.UserRepository;
 import ru.practicum.ewm_service.utils.Status;
@@ -42,7 +43,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     private final CategoryRepository categoryRepository;
     private final RequestRepository requestRepository;
     private final LocationRepository locationRepository;
-    private final Client statClient;
+    private final StatisticsClient statClient;
 
     @Override
     @Transactional(readOnly = true)
