@@ -35,7 +35,6 @@ import ru.practicum.ewm.main.user.repository.UserRepository;
 import ru.practicum.ewm.statistic.client.StatisticClient;
 import ru.practicum.ewm.statistic.dto.EndpointHitDto;
 import ru.practicum.ewm.statistic.dto.ViewStatsDto;
-import ru.practicum.ewm.statistic.service.exception.InvalidParamException;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -133,7 +132,7 @@ class EventServiceImplUnitTests {
 
         verify(eventRepository, times(0))
                 .save(any());
-        assertThrows(InvalidParamException.class,
+        assertThrows(NotExistsException.class,
                 executable);
     }
 
@@ -634,7 +633,7 @@ class EventServiceImplUnitTests {
 
         Executable executable = () -> eventService.updateEventByUser(userId, eventId, updateRequest);
 
-        assertThrows(InvalidParamException.class, executable);
+        assertThrows(NotExistsException.class, executable);
     }
 
     @Test
