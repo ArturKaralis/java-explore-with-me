@@ -12,7 +12,6 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.practicum.ewm.statistic.service.exception.InvalidParamException;
 
 import javax.validation.ConstraintViolationException;
 import java.security.InvalidParameterException;
@@ -89,9 +88,9 @@ public class EwmMainServiceErrorHandler {
 
     @ExceptionHandler({InvalidParameterException.class, MissingRequestHeaderException.class, MissingServletRequestParameterException.class, HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleInvalidParamException(InvalidParamException e) {
+    public ErrorResponse handleInvalidParamException(ConstraintViolationException e) {
         log.error(e.getMessage(), e);
-        return new ErrorResponse(e.getParamName(), e.getMessage());
+        return new ErrorResponse(e.toString(), e.getMessage());
     }
 
 }

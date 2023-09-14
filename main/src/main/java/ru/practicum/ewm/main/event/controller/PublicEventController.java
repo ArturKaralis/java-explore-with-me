@@ -12,7 +12,6 @@ import ru.practicum.ewm.main.event.dto.searchrequest.SearchSortOptionDto;
 import ru.practicum.ewm.main.event.model.RateType;
 import ru.practicum.ewm.main.event.service.EventService;
 import ru.practicum.ewm.main.exception.NotExistsException;
-import ru.practicum.ewm.statistic.service.exception.InvalidParamException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
