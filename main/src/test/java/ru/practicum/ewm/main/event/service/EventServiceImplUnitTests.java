@@ -1711,7 +1711,7 @@ class EventServiceImplUnitTests {
 
         Executable executable = () -> eventService.updateEventByAdmin(eventId, updateRequest);
 
-        assertThrows(InvalidParamException.class, executable);
+        assertThrows(NotExistsException.class, executable);
     }
 
     @Test
