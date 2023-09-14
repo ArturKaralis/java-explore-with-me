@@ -11,6 +11,7 @@ import ru.practicum.ewm.main.event.dto.searchrequest.PublicSearchParamsDto;
 import ru.practicum.ewm.main.event.dto.searchrequest.SearchSortOptionDto;
 import ru.practicum.ewm.main.event.model.RateType;
 import ru.practicum.ewm.main.event.service.EventService;
+import ru.practicum.ewm.main.exception.NotExistsException;
 import ru.practicum.ewm.statistic.service.exception.InvalidParamException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +56,7 @@ public class PublicEventController {
         SearchSortOptionDto sortOption = null;
         if (sort != null) {
             sortOption = SearchSortOptionDto.from(sort)
-                    .orElseThrow(() -> new InvalidParamException("Event sort option", "Unknown state: " + sort));
+                    .orElseThrow(() -> new NotExistsException("Event sort option", "Unknown state: " + sort));
         }
         PublicSearchParamsDto searchParams = PublicSearchParamsDto.builder()
                 .text(text)

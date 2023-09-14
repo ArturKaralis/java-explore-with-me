@@ -32,7 +32,6 @@ import ru.practicum.ewm.main.user.repository.UserRepository;
 import ru.practicum.ewm.statistic.client.StatisticClient;
 import ru.practicum.ewm.statistic.dto.EndpointHitDto;
 import ru.practicum.ewm.statistic.dto.ViewStatsDto;
-import ru.practicum.ewm.statistic.service.exception.InvalidParamException;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -305,7 +304,7 @@ public class EventServiceImpl implements EventService {
 
     private Category getCategoryFromDb(int categoryId) {
         return categoryRepository.findCategoryById(categoryId).orElseThrow(
-                () -> new InvalidParamException(
+                () -> new NotExistsException(
                         "Category id",
                         String.format("Category with id %d not exists", categoryId)
                 )
@@ -501,7 +500,7 @@ public class EventServiceImpl implements EventService {
     private void checkSearchDates(PublicSearchParamsDto searchParams) {
         if (searchParams.getRangeEnd() != null && searchParams.getRangeStart() != null &&
                 searchParams.getRangeEnd().isBefore(searchParams.getRangeStart())) {
-            throw new InvalidParamException(
+            throw new NotExistsException(
                     "Search dates",
                     String.format("StartRange: %s must not be later than EndRange:%s",
                             searchParams.getRangeStart(), searchParams.getRangeEnd()
