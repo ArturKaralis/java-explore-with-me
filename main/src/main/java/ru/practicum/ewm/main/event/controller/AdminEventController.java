@@ -76,7 +76,7 @@ public class AdminEventController {
     }
 
     @PatchMapping("/admin/events/{eventId}")
-    @Validated({OnUpdateValidation.class})
+    @Validated(OnUpdateValidation.class)
     public EventFullDto updateEvent(@PathVariable(name = "eventId") Long eventId,
                                     @Valid @RequestBody UpdateEventAdminRequestDto updateRequest) {
         log.info("Start PATCH /admin/events/{eventId} with eventId: {}, updateRequest: {}", eventId, updateRequest);
