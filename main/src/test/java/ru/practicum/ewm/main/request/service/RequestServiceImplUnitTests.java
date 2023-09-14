@@ -13,8 +13,6 @@ import ru.practicum.ewm.main.category.model.Category;
 import ru.practicum.ewm.main.event.model.Event;
 import ru.practicum.ewm.main.event.model.EventState;
 import ru.practicum.ewm.main.event.repository.EventRepository;
-import ru.practicum.ewm.main.exception.ForbiddenException;
-import ru.practicum.ewm.main.exception.NotExistsException;
 import ru.practicum.ewm.main.request.dto.EventRequestStatusUpdateRequestDto;
 import ru.practicum.ewm.main.request.dto.RequestStatusUpdateDto;
 import ru.practicum.ewm.main.request.model.EventParticipationRequest;

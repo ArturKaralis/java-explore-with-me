@@ -21,7 +21,7 @@ public class NewCompilationDto {
     private Set<Long> events;
     private Boolean pinned;
 
-    @NotBlank(groups = OnCreateValidation.class)
+    @NotBlank(groups = {OnUpdateValidation.class, OnCreateValidation.class})
     @NullOrNotBlank(groups = OnUpdateValidation.class)
     @Size(min = 1, max = 50)
     private String title;

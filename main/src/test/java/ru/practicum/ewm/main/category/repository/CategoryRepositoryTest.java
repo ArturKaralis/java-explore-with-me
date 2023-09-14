@@ -7,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.practicum.ewm.main.category.model.Category;
-import ru.practicum.ewm.main.exception.ForbiddenException;
-import ru.practicum.ewm.main.exception.NotExistsException;
 
 import java.util.List;
 import java.util.Map;

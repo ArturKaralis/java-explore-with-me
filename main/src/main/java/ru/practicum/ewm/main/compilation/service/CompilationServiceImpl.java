@@ -17,6 +17,7 @@ import ru.practicum.ewm.main.exception.NotExistsException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +40,7 @@ public class CompilationServiceImpl implements CompilationService {
         }
 
         Compilation compilation = Compilation.builder()
-                .events(events)
+                .events((Set<Event>) events)
                 .pinned(newCompilationDto.getPinned() != null ? newCompilationDto.getPinned() : false)
                 .title(newCompilationDto.getTitle())
                 .build();
@@ -146,7 +147,7 @@ public class CompilationServiceImpl implements CompilationService {
             List<Event> events = eventRepository.findEventsByIds(updateRequest.getEvents());
             checkEvents(events);
             compilationRepository.clearEventsRecordsForCompilation(compilation.getId());
-            compilation.setEvents(events);
+            compilation.setEvents((Set<Event>) events);
             compilationRepository.addEventsRecordsForCompilation(compilation);
         }
         if (updateRequest.getTitle() != null) {

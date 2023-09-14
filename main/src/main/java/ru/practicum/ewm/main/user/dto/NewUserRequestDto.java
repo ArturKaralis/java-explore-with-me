@@ -12,14 +12,14 @@ import javax.validation.constraints.Size;
 @Data
 public class NewUserRequestDto {
 
-    @NotBlank(groups = OnCreateValidation.class)
-    @NullOrNotBlank(groups = OnUpdateValidation.class)
+    @NotBlank(groups = {OnUpdateValidation.class, OnCreateValidation.class})
+    @NullOrNotBlank(groups = {OnUpdateValidation.class, OnCreateValidation.class})
     @Email
     @Size(min = 6, max = 254)
     private String email;
 
-    @NotBlank(groups = OnCreateValidation.class)
-    @NullOrNotBlank(groups = OnUpdateValidation.class)
+    @NotBlank(groups = {OnUpdateValidation.class, OnCreateValidation.class})
+    @NullOrNotBlank(groups = {OnUpdateValidation.class, OnCreateValidation.class})
     @Size(min = 2, max = 250)
     private String name;
 }

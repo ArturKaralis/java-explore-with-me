@@ -1,6 +1,7 @@
 package ru.practicum.ewm.main.event.service;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.main.category.dto.CategoryDto;
@@ -21,7 +22,6 @@ import ru.practicum.ewm.main.event.model.RateType;
 import ru.practicum.ewm.main.event.repository.EventRepository;
 import ru.practicum.ewm.main.event.repository.RateRepository;
 import ru.practicum.ewm.main.exception.ForbiddenException;
-import ru.practicum.ewm.main.exception.InvalidParamException;
 import ru.practicum.ewm.main.exception.NotExistsException;
 import ru.practicum.ewm.main.request.model.RequestStatus;
 import ru.practicum.ewm.main.request.repository.RequestRepository;
@@ -32,12 +32,10 @@ import ru.practicum.ewm.main.user.repository.UserRepository;
 import ru.practicum.ewm.statistic.client.StatisticClient;
 import ru.practicum.ewm.statistic.dto.EndpointHitDto;
 import ru.practicum.ewm.statistic.dto.ViewStatsDto;
+import ru.practicum.ewm.statistic.service.exception.InvalidParamException;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -324,10 +322,12 @@ public class EventServiceImpl implements EventService {
     }
 
     private Map<Long, Long> getEventsViews(List<Event> events) {
-        List<Event> sortedByCreatedASC = events.stream()
-                .sorted(Comparator.comparing(Event::getCreatedOn))
-                .collect(Collectors.toList());
-        LocalDateTime earliestDate = sortedByCreatedASC.get(0).getCreatedOn().minusMinutes(1);
+        if (events.isEmpty()){
+            throw new ObjectNotFoundException("Events:", events.toString());
+        }
+        Optional<Event> sortedByCreatedASC = events.stream()
+                .min(Comparator.comparing(Event::getCreatedOn));
+        LocalDateTime earliestDate = sortedByCreatedASC.get().getCreatedOn().minusMinutes(1);
         LocalDateTime latestDate = LocalDateTime.now().withNano(0).plusMinutes(1);
         List<String> uris = events.stream()
                 .map(event -> String.format("/events/%d", event.getId()))

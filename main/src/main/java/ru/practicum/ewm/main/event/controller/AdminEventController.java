@@ -10,8 +10,9 @@ import ru.practicum.ewm.main.event.dto.searchrequest.AdminSearchParamsDto;
 import ru.practicum.ewm.main.event.dto.updaterequest.UpdateEventAdminRequestDto;
 import ru.practicum.ewm.main.event.model.EventState;
 import ru.practicum.ewm.main.event.service.EventService;
-import ru.practicum.ewm.main.exception.InvalidParamException;
+import ru.practicum.ewm.main.validator.OnCreateValidation;
 import ru.practicum.ewm.main.validator.OnUpdateValidation;
+import ru.practicum.ewm.statistic.service.exception.InvalidParamException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -76,7 +77,7 @@ public class AdminEventController {
     }
 
     @PatchMapping("/admin/events/{eventId}")
-    @Validated(OnUpdateValidation.class)
+    @Validated({OnUpdateValidation.class, OnCreateValidation.class})
     public EventFullDto updateEvent(@PathVariable(name = "eventId") Long eventId,
                                     @Valid @RequestBody UpdateEventAdminRequestDto updateRequest) {
         log.info("Start PATCH /admin/events/{eventId} with eventId: {}, updateRequest: {}", eventId, updateRequest);

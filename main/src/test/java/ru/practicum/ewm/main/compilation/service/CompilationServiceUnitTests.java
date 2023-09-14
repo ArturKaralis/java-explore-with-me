@@ -16,8 +16,6 @@ import ru.practicum.ewm.main.compilation.model.Compilation;
 import ru.practicum.ewm.main.compilation.repository.CompilationRepository;
 import ru.practicum.ewm.main.event.model.Event;
 import ru.practicum.ewm.main.event.repository.EventRepository;
-import ru.practicum.ewm.main.exception.ForbiddenException;
-import ru.practicum.ewm.main.exception.NotExistsException;
 import ru.practicum.ewm.main.user.model.User;
 
 import java.util.List;

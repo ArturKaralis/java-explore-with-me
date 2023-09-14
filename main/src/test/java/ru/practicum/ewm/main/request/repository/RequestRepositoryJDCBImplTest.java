@@ -11,7 +11,6 @@ import ru.practicum.ewm.main.category.model.Category;
 import ru.practicum.ewm.main.category.repository.CategoryRepository;
 import ru.practicum.ewm.main.event.model.Event;
 import ru.practicum.ewm.main.event.repository.EventRepository;
-import ru.practicum.ewm.main.exception.ForbiddenException;
 import ru.practicum.ewm.main.request.model.EventParticipationRequest;
 import ru.practicum.ewm.main.request.model.RequestStatus;
 import ru.practicum.ewm.main.user.model.User;

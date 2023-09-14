@@ -24,8 +24,8 @@ public class PublicCategoryController {
 
     @GetMapping("/categories")
     public List<CategoryDto> getCategories(
-            @PositiveOrZero @RequestParam(name = "from", required = false, defaultValue = "0") int from,
-            @Positive @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
+            @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") int from,
+            @Positive @RequestParam(name = "size", defaultValue = "10") int size) {
         log.info("Start GET /categories with from: {}, size: {}", from, size);
         List<CategoryDto> foundCategories = categoryService.getCategories(from, size);
         log.info("Finish GET /categories with {}", foundCategories);

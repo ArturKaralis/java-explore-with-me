@@ -10,8 +10,6 @@ import ru.practicum.ewm.main.TestDataProvider;
 import ru.practicum.ewm.main.category.model.Category;
 import ru.practicum.ewm.main.category.repository.CategoryRepository;
 import ru.practicum.ewm.main.event.model.Event;
-import ru.practicum.ewm.main.exception.ForbiddenException;
-import ru.practicum.ewm.main.exception.NotExistsException;
 import ru.practicum.ewm.main.user.model.User;
 import ru.practicum.ewm.main.user.repository.UserRepository;
 
