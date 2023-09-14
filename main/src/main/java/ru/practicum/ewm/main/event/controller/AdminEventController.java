@@ -11,7 +11,6 @@ import ru.practicum.ewm.main.event.dto.updaterequest.UpdateEventAdminRequestDto;
 import ru.practicum.ewm.main.event.model.EventState;
 import ru.practicum.ewm.main.event.service.EventService;
 import ru.practicum.ewm.main.exception.NotExistsException;
-import ru.practicum.ewm.main.validator.OnCreateValidation;
 import ru.practicum.ewm.main.validator.OnUpdateValidation;
 
 import javax.validation.Valid;
@@ -77,7 +76,7 @@ public class AdminEventController {
     }
 
     @PatchMapping("/admin/events/{eventId}")
-    @Validated({OnUpdateValidation.class, OnCreateValidation.class})
+    @Validated({OnUpdateValidation.class})
     public EventFullDto updateEvent(@PathVariable(name = "eventId") Long eventId,
                                     @Valid @RequestBody UpdateEventAdminRequestDto updateRequest) {
         log.info("Start PATCH /admin/events/{eventId} with eventId: {}, updateRequest: {}", eventId, updateRequest);
