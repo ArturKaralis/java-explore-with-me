@@ -17,6 +17,7 @@ import ru.practicum.ewm.main.user.repository.UserRepository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -97,7 +98,7 @@ class CompilationRepositoryTest {
         Compilation compilation = TestDataProvider.getValidCompilationToSave(List.of(event));
         Compilation savedCompilation = compilationRepository.save(compilation);
         Event newEvent = eventRepository.save(TestDataProvider.getValidNotSavedEvent(eventOwner, category));
-        savedCompilation.setEvents(List.of(newEvent));
+        savedCompilation.setEvents((Set<Event>) newEvent);
 
         compilationRepository.addEventsRecordsForCompilation(savedCompilation);
 
