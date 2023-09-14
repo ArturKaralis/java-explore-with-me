@@ -65,7 +65,7 @@ public class PrivateEventController {
     }
 
     @PatchMapping("/users/{userId}/events/{eventId}")
-    @Validated({OnUpdateValidation.class, OnCreateValidation.class})
+    @Validated(OnUpdateValidation.class)
     public EventFullDto updateEventByOwner(
             @PathVariable("userId") Long userId,
             @PathVariable("eventId") Long eventId,
