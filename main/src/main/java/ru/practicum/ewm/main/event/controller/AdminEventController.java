@@ -10,9 +10,9 @@ import ru.practicum.ewm.main.event.dto.searchrequest.AdminSearchParamsDto;
 import ru.practicum.ewm.main.event.dto.updaterequest.UpdateEventAdminRequestDto;
 import ru.practicum.ewm.main.event.model.EventState;
 import ru.practicum.ewm.main.event.service.EventService;
+import ru.practicum.ewm.main.exception.NotExistsException;
 import ru.practicum.ewm.main.validator.OnCreateValidation;
 import ru.practicum.ewm.main.validator.OnUpdateValidation;
-import ru.practicum.ewm.statistic.service.exception.InvalidParamException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -52,7 +52,7 @@ public class AdminEventController {
             states = new HashSet<>();
             for (String stringState : stringStates) {
                 EventState eventState = EventState.from(stringState).orElseThrow(
-                        () -> new InvalidParamException(
+                        () -> new NotExistsException(
                                 "Event State",
                                 String.format("No such event state available: %s", stringState)
                         )
@@ -85,6 +85,5 @@ public class AdminEventController {
         log.info("Finish PATCH /admin/events/{eventId} with {}", updatedEvent);
         return updatedEvent;
     }
-
 
 }
