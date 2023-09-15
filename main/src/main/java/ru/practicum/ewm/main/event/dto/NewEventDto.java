@@ -10,6 +10,7 @@ import ru.practicum.ewm.main.validator.NullOrNotBlank;
 import ru.practicum.ewm.main.validator.OnCreateValidation;
 import ru.practicum.ewm.main.validator.OnUpdateValidation;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
@@ -43,7 +44,7 @@ public class NewEventDto {
 
     private Boolean paid;
 
-    @NotNull(groups = OnCreateValidation.class)
+    @Valid
     private Location location;
 
     @PositiveOrZero
