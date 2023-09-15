@@ -40,7 +40,7 @@ public class AdminCompilationController {
     }
 
     @PatchMapping("/admin/compilations/{compId}")
-    @Validated({OnUpdateValidation.class, OnCreateValidation.class})
+    @Validated(OnUpdateValidation.class)
     public CompilationDto updateCompilation(@PathVariable(name = "compId") Long compilationId,
                                             @Valid @RequestBody NewCompilationDto updateRequest) {
         log.info("Start PATCH /admin/compilations/{compId} with id: {}, updateRequest: {}",

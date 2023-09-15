@@ -34,7 +34,7 @@ public class AdminUserController {
     }
 
     @GetMapping("/admin/users")
-    @Validated({OnUpdateValidation.class, OnCreateValidation.class})
+    @Validated(OnUpdateValidation.class)
     public List<UserDto> getUsers(
             @RequestParam(name = "ids", required = false) List<Long> ids,
             @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") int from,
