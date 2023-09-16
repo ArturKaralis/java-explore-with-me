@@ -34,10 +34,7 @@ import ru.practicum.ewm.statistic.dto.EndpointHitDto;
 import ru.practicum.ewm.statistic.dto.ViewStatsDto;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -324,10 +321,9 @@ public class EventServiceImpl implements EventService {
     }
 
     private Map<Long, Long> getEventsViews(List<Event> events) {
-        List<Event> sortedByCreatedASC = events.stream()
-                .sorted(Comparator.comparing(Event::getCreatedOn))
-                .collect(Collectors.toList());
-        LocalDateTime earliestDate = sortedByCreatedASC.get(0).getCreatedOn().minusMinutes(1);
+        Optional<Event> sortedByCreatedASC = events.stream()
+                .min(Comparator.comparing(Event::getCreatedOn));
+        LocalDateTime earliestDate = sortedByCreatedASC.get().getCreatedOn().minusMinutes(1);
         LocalDateTime latestDate = LocalDateTime.now().withNano(0).plusMinutes(1);
         List<String> uris = events.stream()
                 .map(event -> String.format("/events/%d", event.getId()))
