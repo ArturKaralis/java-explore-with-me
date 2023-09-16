@@ -1,6 +1,7 @@
 package ru.practicum.ewm.main.event.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.main.category.dto.CategoryDto;
@@ -42,6 +43,9 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class EventServiceImpl implements EventService {
+
+    @Value("${app.main}")
+    String app;
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
@@ -429,7 +433,7 @@ public class EventServiceImpl implements EventService {
 
     private void saveEndpointHit(String url, String ip) {
         statisticClient.saveEndpointHit(EndpointHitDto.builder()
-                .app("Ewm-main")
+                .app(app)
                 .uri(url)
                 .ip(ip)
                 .timestamp(LocalDateTime.now().withNano(0))
