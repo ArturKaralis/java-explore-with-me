@@ -1,6 +1,7 @@
 package ru.practicum.ewm.main.event.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,9 @@ public class EventServiceImpl implements EventService {
     private final StatisticClient statisticClient;
     private final RequestRepository requestRepository;
     private final RateRepository rateDAO;
+
+    @Value("${app.name}")
+    private String app;
 
     @Override
     @Transactional
@@ -432,7 +436,7 @@ public class EventServiceImpl implements EventService {
 
     private void saveEndpointHit(String url, String ip) {
         statisticClient.saveEndpointHit(EndpointHitDto.builder()
-                .app("Ewm-main")
+                .app(app)
                 .uri(url)
                 .ip(ip)
                 .timestamp(LocalDateTime.now().withNano(0))

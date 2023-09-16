@@ -112,7 +112,6 @@ public class CompilationServiceImpl implements CompilationService {
         Compilation compilation = getCompilationFromDbById(compilationId);
         Map<Long, List<Event>> compilationsEventsMap =
                 eventRepository.findEventsForCompilations(List.of(compilationId));
-
         if (compilationsEventsMap.get(compilationId) == null) {
             return CompilationMapper.mapToDto(compilation, List.of());
         } else {
