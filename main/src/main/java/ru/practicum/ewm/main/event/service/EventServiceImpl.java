@@ -325,7 +325,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private Map<Long, Long> getEventsViews(List<Event> events) {
-        if (events.isEmpty()){
+        if (events.isEmpty()) {
             new NotExistsException("Events is null", events.toString());
         }
         Optional<Event> sortedByCreatedASC = events.stream()
