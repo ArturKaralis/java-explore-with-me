@@ -47,7 +47,7 @@ services:
     volumes:
       - /var/lib/postgresql/main/
     ports:
-      - "6541:5432"
+      - "54323:5432"
     environment:
       - POSTGRES_DB=ewm-db
       - POSTGRES_USER=root
