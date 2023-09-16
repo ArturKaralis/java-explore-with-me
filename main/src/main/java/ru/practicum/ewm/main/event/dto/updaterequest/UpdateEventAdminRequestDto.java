@@ -13,5 +13,5 @@ import ru.practicum.ewm.main.event.dto.NewEventDto;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class UpdateEventAdminRequestDto extends NewEventDto {
-    AdminRequestStateActionDto stateAction;
+    private AdminRequestStateActionDto stateAction;
 }
