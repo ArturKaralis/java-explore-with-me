@@ -30,7 +30,7 @@ services:
     image: ewm_main_service_image
     container_name: ewm-main-service-container
     ports:
-      - "8080:8080"
+      - "8080:8081"
     depends_on:
       - ewm-db
       - stats-server
