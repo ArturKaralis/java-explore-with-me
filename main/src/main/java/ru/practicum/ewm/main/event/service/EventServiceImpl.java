@@ -556,7 +556,6 @@ public class EventServiceImpl implements EventService {
 
     private void setRatingsToEventsDtos(List<? extends EventShortDto> eventDtos, Map<Long, Long> eventsRatings) {
         eventDtos.forEach(eventShortDto -> eventShortDto.setRating(
-                //eventsRatings.get(eventShortDto.getId()) != null ? eventsRatings.get(eventShortDto.getId()) : 0));
                 eventsRatings.getOrDefault(eventShortDto.getId(), null)));
     }
 
