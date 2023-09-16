@@ -28,7 +28,7 @@ import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 
 @Component
 @RequiredArgsConstructor
-public class EventRepositoryJDBCImpl implements EventRepository {
+public abstract class EventRepositoryJDBCImpl implements EventRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
