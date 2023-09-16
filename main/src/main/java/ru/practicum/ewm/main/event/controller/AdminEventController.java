@@ -32,13 +32,13 @@ public class AdminEventController {
 
     @GetMapping("/admin/events")
     List<EventFullDto> findEvents(
-            @RequestParam(name = "users", required = false) Set<Long> usersIds,
-            @RequestParam(name = "states", required = false) Set<String> stringStates,
-            @RequestParam(name = "categories", required = false) Set<Integer> categoriesIds,
             @RequestParam(name = "rangeStart", required = false)
             @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeStart,
             @RequestParam(name = "rangeEnd", required = false)
             @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeEnd,
+            @RequestParam(name = "users", required = false) Set<Long> usersIds,
+            @RequestParam(name = "categories", required = false) Set<Integer> categoriesIds,
+            @RequestParam(name = "states", required = false) Set<String> stringStates,
             @PositiveOrZero @RequestParam(name = "from", required = false, defaultValue = "0") Integer from,
             @Positive @RequestParam(name = "size", required = false, defaultValue = "10") Integer size
     ) {
@@ -61,11 +61,11 @@ public class AdminEventController {
 
         }
         AdminSearchParamsDto searchParams = AdminSearchParamsDto.builder()
-                .usersIds(usersIds)
-                .states(states)
-                .categoriesIds(categoriesIds)
                 .rangeStart(rangeStart)
                 .rangeEnd(rangeEnd)
+                .usersIds(usersIds)
+                .categoriesIds(categoriesIds)
+                .states(states)
                 .from(from)
                 .size(size)
                 .build();
