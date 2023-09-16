@@ -184,7 +184,7 @@ public class TestDataProvider {
         return Compilation.builder()
                 .title("title")
                 .pinned(false)
-                .events(events)
+                .events((Set<Event>) events)
                 .build();
     }
 
