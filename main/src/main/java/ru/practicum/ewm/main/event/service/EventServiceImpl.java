@@ -21,6 +21,7 @@ import ru.practicum.ewm.main.event.model.EventState;
 import ru.practicum.ewm.main.event.model.RateType;
 import ru.practicum.ewm.main.event.repository.EventRepository;
 import ru.practicum.ewm.main.event.repository.RateRepository;
+import ru.practicum.ewm.main.exception.EmptyObjectException;
 import ru.practicum.ewm.main.exception.ForbiddenException;
 import ru.practicum.ewm.main.exception.InvalidParamException;
 import ru.practicum.ewm.main.exception.NotExistsException;
@@ -326,7 +327,7 @@ public class EventServiceImpl implements EventService {
 
     private Map<Long, Long> getEventsViews(List<Event> events) {
         if (events.isEmpty()) {
-            new NotExistsException("Events is null", events.toString());
+            new EmptyObjectException("переданный обект пуст");
         }
         Optional<Event> sortedByCreatedASC = events.stream()
                 .min(Comparator.comparing(Event::getCreatedOn));
