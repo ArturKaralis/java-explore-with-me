@@ -46,7 +46,6 @@ public class NewEventDto {
 
     private Boolean paid;
 
-    @NotNull(groups = OnCreateValidation.class)
     private Location location;
 
     private Integer participantLimit;
