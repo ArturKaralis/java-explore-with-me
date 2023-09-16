@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public interface EventRepository {
+public interface EventRepository extends List<Event> {
     void updateEvent(Event event);
 
     Optional<Event> findEventByInitiatorIdAndEventId(Long userId, Long eventId);
