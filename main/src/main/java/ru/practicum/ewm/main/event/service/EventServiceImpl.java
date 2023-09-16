@@ -22,7 +22,6 @@ import ru.practicum.ewm.main.event.model.RateType;
 import ru.practicum.ewm.main.event.repository.EventRepository;
 import ru.practicum.ewm.main.event.repository.RateRepository;
 import ru.practicum.ewm.main.exception.ForbiddenException;
-import ru.practicum.ewm.main.exception.InvalidParamException;
 import ru.practicum.ewm.main.exception.NotExistsException;
 import ru.practicum.ewm.main.request.model.RequestStatus;
 import ru.practicum.ewm.main.request.repository.RequestRepository;
@@ -33,6 +32,7 @@ import ru.practicum.ewm.main.user.repository.UserRepository;
 import ru.practicum.ewm.statistic.client.StatisticClient;
 import ru.practicum.ewm.statistic.dto.EndpointHitDto;
 import ru.practicum.ewm.statistic.dto.ViewStatsDto;
+import ru.practicum.ewm.statistic.service.exception.InvalidParamException;
 
 import java.time.LocalDateTime;
 import java.util.*;
