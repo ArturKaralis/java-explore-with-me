@@ -29,4 +29,3 @@ public class EventShortDto {
 
     private Long rating;
 }
-

@@ -21,7 +21,7 @@ import static ru.practicum.ewm.util.constant.Constants.DATE_TIME_FORMATTER;
 public class AppConfig {
 
     @Value("${statistic-service.url}")
-    private String serverUrl;
+    String serverUrl;
 
     @Bean
     @Primary

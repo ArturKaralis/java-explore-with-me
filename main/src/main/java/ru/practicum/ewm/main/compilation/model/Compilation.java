@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.ewm.main.event.model.Event;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 @Data
@@ -21,7 +21,7 @@ public class Compilation {
     private Long id;
     private boolean pinned;
     private String title;
-    private Set<Event> events = new HashSet<>();
+    private List<Event> events = new ArrayList<>();
 
     public Map<String, Object> mapToDb() {
         Map<String, Object> compilationFields = new HashMap<>();

@@ -11,14 +11,14 @@ import java.util.Set;
 @Builder
 public class PublicSearchParamsDto {
 
-    private String text;
-    private Set<Integer> categoriesIds;
-    private Boolean paid;
-    private LocalDateTime rangeStart;
-    private LocalDateTime rangeEnd;
-    private Boolean onlyAvailable;
-    private SearchSortOptionDto sortOption;
-    private Integer from;
-    private Integer size;
-    private EventState state;
+    String text;
+    Set<Integer> categoriesIds;
+    Boolean paid;
+    LocalDateTime rangeStart;
+    LocalDateTime rangeEnd;
+    Boolean onlyAvailable;
+    SearchSortOptionDto sortOption;
+    Integer from;
+    Integer size;
+    EventState state;
 }
