@@ -325,6 +325,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private Map<Long, Long> getEventsViews(List<Event> events) {
+        if (!events.isEmpty()) {
         Optional<Event> sortedByCreatedASC = events.stream()
                 .min(Comparator.comparing(Event::getCreatedOn));
         LocalDateTime earliestDate = sortedByCreatedASC.get().getCreatedOn().minusMinutes(1);
@@ -348,6 +349,8 @@ public class EventServiceImpl implements EventService {
 
                     return Long.parseLong(uriElements[uriElements.length - 1]);
                 }, ViewStatsDto::getHits));
+        }
+        return null;
     }
 
     private void setViewsToEventsDtos(List<? extends EventShortDto> eventDtos, Map<Long, Long> eventsViews) {
