@@ -326,9 +326,6 @@ public class EventServiceImpl implements EventService {
     }
 
     private Map<Long, Long> getEventsViews(List<Event> events) {
-        if (events.isEmpty()) {
-            new EmptyObjectException("переданный обект пуст");
-        }
         Optional<Event> sortedByCreatedASC = events.stream()
                 .min(Comparator.comparing(Event::getCreatedOn));
         LocalDateTime earliestDate = sortedByCreatedASC.get().getCreatedOn().minusMinutes(1);
