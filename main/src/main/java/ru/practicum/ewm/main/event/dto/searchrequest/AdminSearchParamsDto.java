@@ -10,11 +10,11 @@ import java.util.Set;
 @Data
 @Builder
 public class AdminSearchParamsDto {
-    Set<Long> usersIds;
-    Set<EventState> states;
-    Set<Integer> categoriesIds;
-    LocalDateTime rangeStart;
-    LocalDateTime rangeEnd;
-    Integer from;
-    Integer size;
+    private Set<Long> usersIds;
+    private Set<EventState> states;
+    private Set<Integer> categoriesIds;
+    private LocalDateTime rangeStart;
+    private LocalDateTime rangeEnd;
+    private Integer from;
+    private Integer size;
 }
