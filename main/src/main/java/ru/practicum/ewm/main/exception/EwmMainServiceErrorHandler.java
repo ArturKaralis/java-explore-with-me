@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class EwmMainServiceErrorHandler {
 
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseList handleConstraintViolationException(ConstraintViolationException e) {
