@@ -45,7 +45,7 @@ import java.util.stream.Stream;
 public class EventServiceImpl implements EventService {
 
     @Value("${app.main}")
-    String app;
+    private static String app;
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
