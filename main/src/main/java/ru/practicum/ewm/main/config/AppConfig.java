@@ -23,7 +23,6 @@ public class AppConfig {
     @Value("${statistic-service.url}")
     String serverUrl;
 
-
     @Bean
     @Primary
     public ObjectMapper objectMapper() {

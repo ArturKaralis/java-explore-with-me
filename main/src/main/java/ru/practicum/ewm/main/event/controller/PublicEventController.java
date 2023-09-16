@@ -32,20 +32,17 @@ public class PublicEventController {
 
     @GetMapping("/events")
     public List<EventShortDto> findEvents(
+            @RequestParam(name = "rangeStart", required = false)
+            @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeStart,
+            @RequestParam(name = "rangeEnd", required = false)
+            @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeEnd,
             @RequestParam(name = "text", required = false) String text,
             @RequestParam(name = "categories", required = false) Set<Integer> categoriesIds,
             @RequestParam(name = "paid", required = false) Boolean paid,
-
-            @RequestParam(name = "rangeStart", required = false)
-            @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeStart,
-
-            @RequestParam(name = "rangeEnd", required = false)
-            @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime rangeEnd,
-
-            @RequestParam(name = "onlyAvailable", required = false, defaultValue = "false") Boolean onlyAvailable,
+            @RequestParam(name = "onlyAvailable", required = false) Boolean onlyAvailable,
             @RequestParam(name = "sort", required = false) String sort,
-            @PositiveOrZero @RequestParam(name = "from", required = false, defaultValue = "0") Integer from,
-            @Positive @RequestParam(name = "size", required = false, defaultValue = "10") Integer size,
+            @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
+            @Positive @RequestParam(name = "size", defaultValue = "10") Integer size,
             HttpServletRequest httpServletRequest
     ) {
         log.info("Start GET /events with text: {}, categories: {}, paid: {}, rangeStart: {}, rangeEnd: {}," +
@@ -58,11 +55,11 @@ public class PublicEventController {
                     .orElseThrow(() -> new InvalidParamException("Event sort option", "Unknown state: " + sort));
         }
         PublicSearchParamsDto searchParams = PublicSearchParamsDto.builder()
+                .rangeStart(rangeStart)
+                .rangeEnd(rangeEnd)
                 .text(text)
                 .categoriesIds(categoriesIds)
                 .paid(paid)
-                .rangeStart(rangeStart)
-                .rangeEnd(rangeEnd)
                 .onlyAvailable(onlyAvailable)
                 .sortOption(sortOption)
                 .from(from)
