@@ -42,8 +42,8 @@ public class RequestServiceImpl implements RequestService {
         EventParticipationRequest request = EventParticipationRequest.builder()
                 .requester(requester)
                 .event(event)
-                .created(LocalDateTime.now().withNano(0))
                 .requestStatus(defineRequestStatus(event))
+                .created(LocalDateTime.now().withNano(0))
                 .build();
 
         EventParticipationRequest savedRequest = requestRepository.save(request);
