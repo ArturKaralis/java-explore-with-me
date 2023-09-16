@@ -24,7 +24,7 @@ public class PublicCompilationController {
 
     @GetMapping("/compilations")
     public List<CompilationDto> findCompilations(
-            @RequestParam(name = "pinned", required = false) Boolean pinned,
+            @RequestParam(name = "pinned", required = false) boolean pinned,
             @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") int from,
             @Positive @RequestParam(name = "size", required = false, defaultValue = "10") int size
     ) {

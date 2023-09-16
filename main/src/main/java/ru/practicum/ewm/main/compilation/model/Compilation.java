@@ -19,7 +19,7 @@ import java.util.Map;
 public class Compilation {
 
     private Long id;
-    private Boolean pinned;
+    private boolean pinned;
     private String title;
     private List<Event> events = new ArrayList<>();
 
