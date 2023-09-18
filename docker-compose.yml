@@ -1,38 +1,54 @@
 version: '3.1'
 services:
-  statistic-client:
-    build: statistic/client/
-    container_name: ewm-stats-client
-    ports:
-      - "8080:8080"
-    depends_on:
-      [ statistic-server ]
-    environment:
-      - STAT_CLIENT_PORT=8080
-      - STAT_SERVER_ADDRESS=http://statistic-server:9090
-
-  statistic-server:
+  stats-server:
     build: statistic/server/
-    container_name: ewm-stats-server
+    image: ewm_statistic_service_image
+    container_name: ewm-statistic-service-container
     ports:
       - "9090:9090"
     depends_on:
-      [ statistics-db ]
+      - stats-db
     environment:
-      STAT_SERVER_PORT: 9090
-      DB_HOST: emw_statistics_db
-      DB_PORT: 5432
-      DB_NAME: ewmstatistics
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/ewm-stat
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
 
-  statistics-db:
-    image: postgres:13.7-alpine
-    container_name: ewm-stats-db
+  stats-db:
+    image: postgres:14-alpine
+    container_name: stats-db-container
+    volumes:
+      - /var/lib/postgresql/stats/
+    ports:
+      - "6543:5432"
+    environment:
+      - POSTGRES_DB=ewm-stat
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+
+  ewm-service:
+    build: main
+    image: ewm_main_service_image
+    container_name: ewm-main-service-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ewm-db
+      - stats-server
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm-db
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - STATISTIC_SERVICE_URL=http://stats-server:9090
+
+  ewm-db:
+    image: postgres:14-alpine
+    container_name: ewm-db-container
+    volumes:
+      - /var/lib/postgresql/main/
     ports:
       - "6541:5432"
     environment:
-      POSTGRES_DB: ewmstatistics
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-    hostname: emw_statistics_db
+      - POSTGRES_DB=ewm-db
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
