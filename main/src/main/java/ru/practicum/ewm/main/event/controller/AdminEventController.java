@@ -39,8 +39,8 @@ public class AdminEventController {
             @RequestParam(name = "users", required = false) Set<Long> usersIds,
             @RequestParam(name = "categories", required = false) Set<Integer> categoriesIds,
             @RequestParam(name = "states", required = false) Set<String> stringStates,
-            @PositiveOrZero @RequestParam(name = "from", required = false, defaultValue = "0") Integer from,
-            @Positive @RequestParam(name = "size", required = false, defaultValue = "10") Integer size
+            @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
+            @Positive @RequestParam(name = "size", defaultValue = "10") Integer size
     ) {
         log.info("Start GET /admin/events with users: {}, states:{}, categories: {}, " +
                         "rangeStart: {}, rangeEnd: {}, from: {}, size: {}",
