@@ -3,6 +3,7 @@
 Ссылка на пул-реквест 3 части работы: https://github.com/ArturKaralis/java-explore-with-me/pull/11
 
 Template repository for ExploreWithMe project.
+
 В рамках проекта разработано REST API для приложения ExploreWithMe. 
 Проект предоставляет возможность делиться информацией об интересных событиях и помогать найти компанию для участия в них.
 Технологический стек: Java, Spring Boot, Maven, REST, Lombok, SQL, JDBC, JPA, Docker Compose, Postman.
