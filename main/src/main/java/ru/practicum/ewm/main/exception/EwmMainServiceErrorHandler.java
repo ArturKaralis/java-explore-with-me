@@ -57,33 +57,12 @@ public class EwmMainServiceErrorHandler {
         return new ErrorResponse(e.getParamName(), e.getMessage());
     }
 
-    /*@ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleInvalidParamException(InvalidParamException e) {
-        log.error(e.getMessage(), e);
-        return new ErrorResponse(e.getParamName(), e.getMessage());
-    }*/
-
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotExistsException(NotExistsException e) {
         log.error(e.getMessage(), e);
         return new ErrorResponse(e.getClassName(), e.getMessage());
     }
-
-    /*@ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMissingRequestHeaderException(MissingRequestHeaderException e) {
-        log.error(e.getMessage(), e);
-        return new ErrorResponse(e.getHeaderName(), e.getMessage());
-    }*/
-
-    /*@ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        log.error(e.getMessage(), e);
-        return new ErrorResponse("Request body", e.getMessage());
-    }*/
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -98,13 +77,6 @@ public class EwmMainServiceErrorHandler {
         log.error(e.getMessage(), e);
         return new ErrorResponse(e.getParamName(), e.getMessage());
     }
-
-    /*@ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
-        log.error(e.getMessage(), e);
-        return new ErrorResponse("Query parameter", e.getMessage());
-    }*/
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
