@@ -55,6 +55,24 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
+    public void addRateToEvent(Long userId, Long eventId, RateType rateType) {
+        User rater = getUserFromDb(userId);
+        Event event = getEventFromDbByIdAndState(eventId, EventState.PUBLISHED);
+        checkRater(rater, event);
+
+        int rate = defineRate(rateType);
+        rateDAO.addRate(userId, eventId, rate);
+    }
+
+    @Override
+    @Transactional
+    public void deleteRateFromEvent(Long userId, Long eventId, RateType rateType) {
+        int rate = defineRate(rateType);
+        rateDAO.deleteRate(userId, eventId, rate);
+    }
+
+    @Override
+    @Transactional
     public EventFullDto addEvent(Long userId, NewEventDto newEventDto) {
         checkNewEventDate(newEventDto.getEventDate());
         User eventInitiator = getUserFromDb(userId);
@@ -178,24 +196,6 @@ public class EventServiceImpl implements EventService {
         }
 
         return mapToFullDtoAndFetchViews(foundEvents);
-    }
-
-    @Override
-    @Transactional
-    public void addRateToEvent(Long userId, Long eventId, RateType rateType) {
-        User rater = getUserFromDb(userId);
-        Event event = getEventFromDbByIdAndState(eventId, EventState.PUBLISHED);
-        checkRater(rater, event);
-
-        int rate = defineRate(rateType);
-        rateDAO.addRate(userId, eventId, rate);
-    }
-
-    @Override
-    @Transactional
-    public void deleteRateFromEvent(Long userId, Long eventId, RateType rateType) {
-        int rate = defineRate(rateType);
-        rateDAO.deleteRate(userId, eventId, rate);
     }
 
     private void checkIfAvailableForUpdate(

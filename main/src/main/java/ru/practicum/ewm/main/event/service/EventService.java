@@ -12,6 +12,11 @@ import ru.practicum.ewm.main.event.model.RateType;
 import java.util.List;
 
 public interface EventService {
+
+    void addRateToEvent(Long userId, Long eventId, RateType rateType);
+
+    void deleteRateFromEvent(Long userId, Long eventId, RateType rateType);
+
     EventFullDto addEvent(Long userId, NewEventDto newEventDto);
 
     List<EventShortDto> findUsersEvents(Long userId, int from, int size);
@@ -28,7 +33,4 @@ public interface EventService {
 
     List<EventFullDto> findEventsAdmin(AdminSearchParamsDto searchParams);
 
-    void addRateToEvent(Long userId, Long eventId, RateType rateType);
-
-    void deleteRateFromEvent(Long userId, Long eventId, RateType rateType);
 }
