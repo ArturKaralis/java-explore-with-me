@@ -30,6 +30,49 @@ public class PublicEventController {
 
     private final EventService eventService;
 
+    @PatchMapping("/users/{userId}/events/{eventId}/like")
+    public void addLikeToEvent(@PathVariable(name = "userId") Long userId,
+                               @PathVariable(name = "eventId") Long eventId) {
+        log.info("Start POST /users/{userId}/events/{eventId}/like with userId: {}, eventId: {}", userId, eventId);
+        eventService.addRateToEvent(userId, eventId, RateType.LIKE);
+        log.info("Finish POST /users/{userId}/events/{eventId}/like with userId: {}, eventId: {}", userId, eventId);
+    }
+
+    @PatchMapping("/users/{userId}/events/{eventId}/dislike")
+    public void addDislikeToEvent(@PathVariable(name = "userId") Long userId,
+                                  @PathVariable(name = "eventId") Long eventId) {
+        log.info("Start POST /users/{userId}/events/{eventId}/dislike with userId: {}, eventId: {}", userId, eventId);
+        eventService.addRateToEvent(userId, eventId, RateType.DISLIKE);
+        log.info("Start POST /users/{userId}/events/{eventId}/dislike with userId: {}, eventId: {}", userId, eventId);
+    }
+
+    @DeleteMapping("/users/{userId}/events/{eventId}/like")
+    public void deleteLikeFromEvent(@PathVariable(name = "userId") Long userId,
+                                    @PathVariable(name = "eventId") Long eventId) {
+        log.info("Start DELETE /users/{userId}/events/{eventId}/like with userId: {}, eventId: {}", userId, eventId);
+        eventService.deleteRateFromEvent(userId, eventId, RateType.LIKE);
+        log.info("Finish DELETE /users/{userId}/events/{eventId}/like with userId: {}, eventId: {}", userId, eventId);
+    }
+
+    @DeleteMapping("/users/{userId}/events/{eventId}/dislike")
+    public void deleteDislikeFromEvent(@PathVariable(name = "userId") Long userId,
+                                       @PathVariable(name = "eventId") Long eventId) {
+        log.info("Start DELETE /users/{userId}/events/{eventId}/dislike with userId: {}, eventId: {}", userId, eventId);
+        eventService.deleteRateFromEvent(userId, eventId, RateType.DISLIKE);
+        log.info("Start DELETE /users/{userId}/events/{eventId}/dislike with userId: {}, eventId: {}", userId, eventId);
+    }
+
+    @GetMapping("/events/{id}")
+    public EventFullDto findEventById(
+            @PathVariable(name = "id") Long eventId,
+            HttpServletRequest httpServletRequest
+    ) {
+        log.info("Start GET /events/{id} with eventId: {}, ip: {}", eventId, httpServletRequest.getRemoteAddr());
+        EventFullDto foundEvent = eventService.findEventByIdPublic(eventId, httpServletRequest.getRemoteAddr());
+        log.info("Finish GET /events/{id} with {}", foundEvent);
+        return foundEvent;
+    }
+
     @GetMapping("/events")
     public List<EventShortDto> findEvents(
             @RequestParam(name = "rangeStart", required = false)
@@ -68,49 +111,6 @@ public class PublicEventController {
         List<EventShortDto> foundEvents = eventService.findEventsPublic(searchParams, httpServletRequest.getRemoteAddr());
         log.info("Finish GET /events with {}", foundEvents);
         return foundEvents;
-    }
-
-    @GetMapping("/events/{id}")
-    public EventFullDto findEventById(
-            @PathVariable(name = "id") Long eventId,
-            HttpServletRequest httpServletRequest
-    ) {
-        log.info("Start GET /events/{id} with eventId: {}, ip: {}", eventId, httpServletRequest.getRemoteAddr());
-        EventFullDto foundEvent = eventService.findEventByIdPublic(eventId, httpServletRequest.getRemoteAddr());
-        log.info("Finish GET /events/{id} with {}", foundEvent);
-        return foundEvent;
-    }
-
-    @PatchMapping("/users/{userId}/events/{eventId}/like")
-    public void addLikeToEvent(@PathVariable(name = "userId") Long userId,
-                               @PathVariable(name = "eventId") Long eventId) {
-        log.info("Start POST /users/{userId}/events/{eventId}/like with userId: {}, eventId: {}", userId, eventId);
-        eventService.addRateToEvent(userId, eventId, RateType.LIKE);
-        log.info("Finish POST /users/{userId}/events/{eventId}/like with userId: {}, eventId: {}", userId, eventId);
-    }
-
-    @PatchMapping("/users/{userId}/events/{eventId}/dislike")
-    public void addDislikeToEvent(@PathVariable(name = "userId") Long userId,
-                                  @PathVariable(name = "eventId") Long eventId) {
-        log.info("Start POST /users/{userId}/events/{eventId}/dislike with userId: {}, eventId: {}", userId, eventId);
-        eventService.addRateToEvent(userId, eventId, RateType.DISLIKE);
-        log.info("Start POST /users/{userId}/events/{eventId}/dislike with userId: {}, eventId: {}", userId, eventId);
-    }
-
-    @DeleteMapping("/users/{userId}/events/{eventId}/like")
-    public void deleteLikeFromEvent(@PathVariable(name = "userId") Long userId,
-                                    @PathVariable(name = "eventId") Long eventId) {
-        log.info("Start DELETE /users/{userId}/events/{eventId}/like with userId: {}, eventId: {}", userId, eventId);
-        eventService.deleteRateFromEvent(userId, eventId, RateType.LIKE);
-        log.info("Finish DELETE /users/{userId}/events/{eventId}/like with userId: {}, eventId: {}", userId, eventId);
-    }
-
-    @DeleteMapping("/users/{userId}/events/{eventId}/dislike")
-    public void deleteDislikeFromEvent(@PathVariable(name = "userId") Long userId,
-                                       @PathVariable(name = "eventId") Long eventId) {
-        log.info("Start DELETE /users/{userId}/events/{eventId}/dislike with userId: {}, eventId: {}", userId, eventId);
-        eventService.deleteRateFromEvent(userId, eventId, RateType.DISLIKE);
-        log.info("Start DELETE /users/{userId}/events/{eventId}/dislike with userId: {}, eventId: {}", userId, eventId);
     }
 
 
